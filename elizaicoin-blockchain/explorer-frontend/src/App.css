@@ -1,0 +1,250 @@
+/* Main layout */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar-brand img {
+  margin-right: 10px;
+}
+
+/* Card styling */
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+/* Block and transaction styling */
+.block-card {
+  border-left: 4px solid #007bff;
+}
+
+.transaction-card {
+  border-left: 4px solid #28a745;
+}
+
+.mining-card {
+  border-left: 4px solid #dc3545;
+}
+
+.stats-card {
+  border-left: 4px solid #6610f2;
+}
+
+/* Hash display */
+.hash-display {
+  font-family: monospace;
+  word-break: break-all;
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.hash-short {
+  font-family: monospace;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* Timestamp formatting */
+.timestamp {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Pagination */
+.pagination {
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Transaction graph */
+.transaction-graph {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  background-color: #fff;
+}
+
+/* Mining panel */
+.mining-panel {
+  background-color: #f8f9fa;
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.mining-result {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+}
+
+/* Admin dashboard */
+.admin-metric {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.admin-metric h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.admin-metric .value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.admin-metric .unit {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Charts */
+.chart-container {
+  height: 300px;
+  margin-bottom: 2rem;
+}
+
+/* Search box */
+.search-box {
+  margin-bottom: 2rem;
+}
+
+/* Loading spinner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hash-display {
+    font-size: 0.8rem;
+  }
+  
+  .admin-metric .value {
+    font-size: 1.5rem;
+  }
+  
+  .chart-container {
+    height: 250px;
+  }
+}
+
+/* Animation for mining */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.mining-animation {
+  animation: pulse 1.5s infinite;
+}
+
+/* Transaction status indicators */
+.status-pending {
+  color: #ffc107;
+}
+
+.status-confirmed {
+  color: #28a745;
+}
+
+.status-failed {
+  color: #dc3545;
+}
+
+/* Energy efficiency indicator */
+.energy-efficient {
+  color: #28a745;
+}
+
+.energy-inefficient {
+  color: #dc3545;
+}
+
+/* Tooltip styling */
+.custom-tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  max-width: 300px;
+}
+
+/* Badge styling */
+.badge-mining {
+  background-color: #dc3545;
+}
+
+.badge-transaction {
+  background-color: #28a745;
+}
+
+.badge-block {
+  background-color: #007bff;
+}
+
+/* Difficulty indicator */
+.difficulty-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.difficulty-easy {
+  background-color: #28a745;
+}
+
+.difficulty-medium {
+  background-color: #ffc107;
+}
+
+.difficulty-hard {
+  background-color: #dc3545;
+}

@@ -1,0 +1,56 @@
+# Elizaicoin Blockchain API Test Requests
+# This file can be used with REST Client extensions in VS Code or similar tools
+
+### Get blockchain stats
+GET http://localhost:5000/stats
+
+### Get coin information
+GET http://localhost:5000/coin/info
+
+### Get all blocks (paginated)
+GET http://localhost:5000/blocks?page=1&per_page=10
+
+### Get a specific block by index
+GET http://localhost:5000/blocks/1
+
+### Get pending transactions
+GET http://localhost:5000/transactions
+
+### Create a new transaction
+POST http://localhost:5000/transactions/new
+Content-Type: application/json
+
+{
+  "sender": "0x1234567890abcdef1234567890abcdef12345678",
+  "recipient": "0xabcdef1234567890abcdef1234567890abcdef12",
+  "amount": 5.0,
+  "data": {
+    "message": "Test transaction"
+  }
+}
+
+### Mine a new block
+GET http://localhost:5000/mine?miner=0x1234567890abcdef1234567890abcdef12345678
+
+### Validate the blockchain
+GET http://localhost:5000/chain/validate
+
+### Explorer Backend API Test Requests
+
+### Get blocks from explorer backend
+GET http://localhost:3000/api/blocks?page=1&per_page=10
+
+### Get transactions from explorer backend
+GET http://localhost:3000/api/transactions
+
+### Get transaction graph data
+GET http://localhost:3000/api/graph/transactions
+
+### Get admin metrics
+GET http://localhost:3000/api/admin/metrics
+
+### Health check
+GET http://localhost:3000/health
+
+### Prometheus metrics
+GET http://localhost:3000/metrics

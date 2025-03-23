@@ -1,0 +1,409 @@
+openapi: 3.0.0
+info:
+  title: Elizaicoin Blockchain API
+  description: API for interacting with the Elizaicoin (EZC) blockchain
+  version: 1.0.0
+  
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+tags:
+  - name: Blocks
+    description: Operations related to blockchain blocks
+  - name: Transactions
+    description: Operations related to blockchain transactions
+  - name: Mining
+    description: Operations related to mining new blocks
+  - name: Coin
+    description: Operations related to the Elizaicoin cryptocurrency
+  - name: Stats
+    description: Operations related to blockchain statistics
+
+paths:
+  /blocks:
+    get:
+      summary: Get all blocks in the blockchain
+      tags:
+        - Blocks
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of blocks per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Block'
+                  total_blocks:
+                    type: integer
+                  page:
+                    type: integer
+                  per_page:
+                    type: integer
+                  total_pages:
+                    type: integer
+
+  /blocks/{blockId}:
+    get:
+      summary: Get a specific block by index or hash
+      tags:
+        - Blocks
+      parameters:
+        - name: blockId
+          in: path
+          description: Block index or hash
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        '404':
+          description: Block not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Block not found
+
+  /transactions:
+    get:
+      summary: Get all pending transactions
+      tags:
+        - Transactions
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pending_transactions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+                  count:
+                    type: integer
+
+  /transactions/{txHash}:
+    get:
+      summary: Get a specific transaction by hash
+      tags:
+        - Transactions
+      parameters:
+        - name: txHash
+          in: path
+          description: Transaction hash
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction:
+                    $ref: '#/components/schemas/Transaction'
+                  block_index:
+                    type: integer
+                  block_hash:
+                    type: string
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Transaction not found
+
+  /transactions/new:
+    post:
+      summary: Create a new transaction
+      tags:
+        - Transactions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sender
+                - recipient
+                - amount
+              properties:
+                sender:
+                  type: string
+                  description: Sender address
+                recipient:
+                  type: string
+                  description: Recipient address
+                amount:
+                  type: number
+                  description: Amount to transfer (in EZC)
+                data:
+                  type: object
+                  description: Additional transaction data
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  currency:
+                    type: string
+        '400':
+          description: Missing required fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Missing required fields
+
+  /mine:
+    get:
+      summary: Mine a new block with pending transactions
+      tags:
+        - Mining
+      parameters:
+        - name: miner
+          in: query
+          description: Miner address
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block mined successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  block_index:
+                    type: integer
+                  block_hash:
+                    type: string
+                  transactions:
+                    type: integer
+                  mining_time:
+                    type: number
+                  energy_consumed:
+                    type: number
+                  difficulty:
+                    type: integer
+                  reward:
+                    type: number
+                  currency:
+                    type: string
+
+  /chain/validate:
+    get:
+      summary: Validate the blockchain
+      tags:
+        - Blocks
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  chain_length:
+                    type: integer
+
+  /coin/info:
+    get:
+      summary: Get information about the Elizaicoin (EZC) cryptocurrency
+      tags:
+        - Coin
+      responses:
+        '200':
+          description: Coin information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  symbol:
+                    type: string
+                  current_supply:
+                    type: number
+                  max_supply:
+                    type: number
+                  supply_percentage:
+                    type: number
+                  next_block_reward:
+                    type: number
+                  halving_interval:
+                    type: integer
+                  blocks_until_next_halving:
+                    type: integer
+
+  /stats:
+    get:
+      summary: Get blockchain statistics
+      tags:
+        - Stats
+      responses:
+        '200':
+          description: Blockchain statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocks:
+                    type: integer
+                  transactions:
+                    type: integer
+                  difficulty:
+                    type: integer
+                  avg_block_time:
+                    type: number
+                  energy_per_transaction:
+                    type: number
+                  energy_efficiency_factor:
+                    type: number
+                  coin_name:
+                    type: string
+                  coin_symbol:
+                    type: string
+                  current_supply:
+                    type: number
+                  max_supply:
+                    type: number
+                  supply_percentage:
+                    type: number
+                  next_reward:
+                    type: number
+                  scrypt_params:
+                    type: object
+                    properties:
+                      n:
+                        type: integer
+                      r:
+                        type: integer
+                      p:
+                        type: integer
+                      dklen:
+                        type: integer
+
+  /reset:
+    post:
+      summary: Reset the blockchain (for testing purposes)
+      tags:
+        - Blocks
+      responses:
+        '200':
+          description: Blockchain reset successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    Block:
+      type: object
+      properties:
+        index:
+          type: integer
+          description: Block index
+        timestamp:
+          type: number
+          description: Block creation timestamp
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+          description: Transactions included in the block
+        previous_hash:
+          type: string
+          description: Hash of the previous block
+        hash:
+          type: string
+          description: Hash of the block
+        nonce:
+          type: integer
+          description: Nonce used for mining
+        difficulty:
+          type: integer
+          description: Mining difficulty
+        energy_consumed:
+          type: number
+          description: Energy consumed during mining
+
+    Transaction:
+      type: object
+      properties:
+        sender:
+          type: string
+          description: Sender address
+        recipient:
+          type: string
+          description: Recipient address
+        amount:
+          type: number
+          description: Transaction amount
+        timestamp:
+          type: number
+          description: Transaction timestamp
+        data:
+          type: object
+          description: Additional transaction data
+        hash:
+          type: string
+          description: Transaction hash

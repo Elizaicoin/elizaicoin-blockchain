@@ -1,0 +1,33 @@
+{
+  "url": "stratum+tcp://pool.elizaicoin.example.com:3333",
+  "user": "EZCWalletAddress.worker1",
+  "pass": "x",
+  "algo": "scrypt",
+  "threads": 4,
+  "cpu-priority": 0,
+  "cpu-affinity": -1,
+  "benchmark": false,
+  "debug": false,
+  "protocol": true,
+  "quiet": false,
+  "max-temp": 80,
+  "retries": 5,
+  "retry-pause": 5,
+  "timeout": 300,
+  "time-limit": 0,
+  "shares-limit": 0,
+  "donate-level": 1,
+  "user-agent": "",
+  "syslog": false,
+  "background": false,
+  "colors": true,
+  "no-color": false,
+  "no-huge-pages": false,
+  "api": {
+    "port": 4048,
+    "access-token": null,
+    "worker-id": null,
+    "ipv6": false,
+    "restricted": true
+  }
+}
